@@ -1,0 +1,7 @@
+services:
+  web:
+    build:
+      context: ./web
+    ports:
+      - "4173:80"
+    restart: unless-stopped

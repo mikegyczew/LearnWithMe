@@ -27,3 +27,35 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Node / React
+node_modules/
+dist/
+.vite/
+
+# .NET build artifacts
+**/bin/
+**/obj/
+
+# Android build artifacts
+*.apk
+*.aab
+*.apks
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Temporary files
+*.tmp
+*.bak
+.DS_Store

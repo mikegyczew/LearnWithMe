@@ -26,6 +26,35 @@ if (( SDK_MAJOR < 10 )); then
     exit 1
 fi
 
+if ! command -v java >/dev/null 2>&1; then
+    echo "BLAD: Nie znaleziono JDK. Wymagany jest JDK 21 dla MAUI Android."
+    exit 1
+fi
+
+JAVA_HOME="${JAVA_HOME:-$(dirname "$(dirname "$(readlink -f "$(command -v java)")")") }"
+JAVA_HOME="${JAVA_HOME%%[[:space:]]}"
+export JAVA_HOME
+export PATH="$JAVA_HOME/bin:$PATH"
+
+JAVA_VERSION="$(java -version 2>&1 | head -n 1 | sed -E 's/.*version "?([0-9]+).*$/\1/')"
+if (( JAVA_VERSION < 21 )); then
+    echo "BLAD: Projekt wymaga JDK 21. Zainstaluj OpenJDK 21 i ustaw JAVA_HOME."
+    exit 1
+fi
+
+if [[ -n "${ANDROID_HOME:-}" ]]; then
+    :
+elif [[ -d "/usr/lib/android-sdk" ]]; then
+    ANDROID_HOME="/usr/lib/android-sdk"
+elif [[ -d "$HOME/android-sdk" ]]; then
+    ANDROID_HOME="$HOME/android-sdk"
+else
+    ANDROID_HOME="$HOME/android-sdk"
+fi
+
+ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
+export ANDROID_HOME ANDROID_SDK_ROOT
+
 # Nie nadpisujemy istniejącego projektu
 if [[ -f "$PROJECT_NAME.sln" ||
       -f "$PROJECT_NAME.slnx" ||
@@ -37,7 +66,32 @@ fi
 
 # 2. Instalacja MAUI dla Linux/Android
 echo
-echo "===== SPRAWDZANIE MAUI ====="
+echo "===== SPRAWDZANIE MAUI I ANDROID SDK ====="
+
+if [[ ! -d "$ANDROID_HOME" ]]; then
+    echo "Android SDK nie został wykryty w $ANDROID_HOME."
+    if command -v apt-get >/dev/null 2>&1; then
+        echo "Instaluję wymagane pakiety Android SDK i JDK 21..."
+        if command -v sudo >/dev/null 2>&1 && [[ "$(id -u)" -ne 0 ]]; then
+            sudo apt-get update
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-21-jdk android-sdk google-android-cmdline-tools-17.0-installer
+        else
+            apt-get update
+            DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-21-jdk android-sdk google-android-cmdline-tools-17.0-installer
+        fi
+    else
+        echo "BLAD: Brak zainstalowanego Android SDK. Zainstaluj android-sdk i JDK 21 ręcznie."
+        exit 1
+    fi
+fi
+
+if [[ -f "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" ]]; then
+    echo "Akceptuję licencje Android SDK..."
+    yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null 2>&1 || true
+
+    echo "Sprawdzam pakiety Android SDK (platformy i build-tools)..."
+    "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platform-tools" "platforms;android-34" "build-tools;34.0.0" >/dev/null 2>&1 || true
+fi
 
 if ! dotnet workload list | grep -q "maui-android"; then
     echo "Instaluję workload maui-android..."

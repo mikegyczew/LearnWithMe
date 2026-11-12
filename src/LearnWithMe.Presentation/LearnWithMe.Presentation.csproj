@@ -28,10 +28,10 @@
 		<MauiXamlInflator>SourceGen</MauiXamlInflator>
 
 		<!-- Display name -->
-		<ApplicationTitle>LearnWithMe.Presentation</ApplicationTitle>
+		<ApplicationTitle>Uczę się z Tobą</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.learnwithme.presentation</ApplicationId>
+		<ApplicationId>pl.learnwithme.app</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>

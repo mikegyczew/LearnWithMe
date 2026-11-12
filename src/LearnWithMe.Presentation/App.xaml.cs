@@ -2,15 +2,18 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace LearnWithMe.Presentation;
 
-public partial class App : Application
+public partial class App : Microsoft.Maui.Controls.Application
 {
-	public App()
+	private readonly IServiceProvider _serviceProvider;
+
+	public App(IServiceProvider serviceProvider)
 	{
+		_serviceProvider = serviceProvider;
 		InitializeComponent();
 	}
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
-		return new Window(new AppShell());
+		return new Window(new AppShell(_serviceProvider));
 	}
 }

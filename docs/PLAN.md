@@ -26,10 +26,12 @@ Najważniejsze są wspólne odkrywanie, cierpliwość, zabawa i samodzielność.
 - .NET MAUI,
 - Android jako pierwsza platforma docelowa,
 - tablety jako główne urządzenia,
+- React i TypeScript dla wersji webowej,
 - MVVM,
 - Clean Architecture,
 - Entity Framework Core,
 - SQLite jako lokalna baza danych,
+- Docker Compose do uruchamiania wersji webowej,
 - xUnit do testów.
 
 ## 4. Etap I - MVP: polski alfabet
@@ -71,14 +73,22 @@ Najważniejsze są wspólne odkrywanie, cierpliwość, zabawa i samodzielność.
 - możliwość zamiany ról,
 - dziecko może przygotować zagadkę dla rodzica.
 
-## 5. Etap II - liczby i matematyka
+## 5. Zrobiliśmy: strefę cyferek i matematykę (poziom klasy 1)
 
-- rozpoznawanie cyfr,
-- liczenie przedmiotów,
-- porównywanie ilości,
-- dodawanie i odejmowanie,
-- proste zadania obrazkowe,
-- nauka kształtu cyfr.
+Strefę matematyczną dodaliśmy do aplikacji MAUI i webowej. Zawiera ona:
+
+- „Waszą podróż przez Cyfry”: rozpoznawanie liczb od 0 do 20, czytanie ich nazw i rysowanie po śladzie;
+- czytanie liczb razem z przykładami rzeczowników, m.in. „jeden samochód”, „jedna sukienka” i „jedna zabawka”, z poprawnymi formami liczby mnogiej;
+- ćwiczenia z liczenia obrazków;
+- dodawanie i odejmowanie w zakresie do 20;
+- wprowadzenie do mnożenia przez równe grupy oraz dzielenia przez równe rozdzielanie;
+- łagodne komunikaty po odpowiedzi, automatyczne przejście dalej po sukcesie i możliwość ponowienia próby;
+- osobny zapis postępów matematycznych dla każdego profilu.
+
+W wersji webowej podłączyliśmy gotowe polskie nagrania Piper Gosia, które
+działają offline i obejmują również komunikaty oraz zadania matematyczne.
+Wersja MAUI korzysta z głosu dostępnego na urządzeniu. Rysowanie cyfr
+wykorzystuje ten sam mechanizm śledzenia kształtu co rysowanie liter.
 
 ## 6. Etap III - poznawanie świata
 
@@ -118,21 +128,23 @@ Najważniejsze są wspólne odkrywanie, cierpliwość, zabawa i samodzielność.
 - brak wysyłania danych dziecka do zewnętrznych usług,
 - dostęp do funkcji rodzicielskich oddzielony od trybu dziecka.
 
-## 10. Kolejność realizacji
+## 10. Co zrobiliśmy i co pozostaje
 
-1. Przygotowanie repozytorium i architektury.
-2. Konfiguracja aplikacji MAUI i Androida.
-3. Podstawowy interfejs i nawigacja.
-4. Profile dzieci.
-5. Lokalna baza SQLite.
-6. Moduł polskiego alfabetu.
-7. Audio i ilustracje.
-8. Ćwiczenia interaktywne.
-9. Rysowanie liter palcem.
-10. Zapisywanie postępów i osiągnięć.
-11. Tryb wspólnej nauki.
-12. Testy na tabletach Android.
-13. Budowanie i instalacja APK.
+### Zrobione
+- Przygotowaliśmy aplikację MAUI z profilami dzieci i lokalnym zapisem postępów w SQLite.
+- Dodaliśmy polski alfabet, ćwiczenia, odsłuchiwanie, rysowanie liter i tryb wspólnej nauki.
+- Dodaliśmy do MAUI i aplikacji webowej matematykę klasy 1, podróż przez cyfry,
+  czytanie przykładów, rysowanie cyfr oraz zapis postępów dla każdego profilu.
+- Dodaliśmy webowe nagrania Piper Gosia działające offline oraz Docker Compose
+  do uruchamiania aplikacji webowej.
+- Sprawdziliśmy build i lint wersji webowej oraz odpowiedź HTTP 200 uruchomionej
+  aplikacji w Dockerze.
+
+### Pozostaje
+- Zbudować i sprawdzić aplikację MAUI na Androidzie; wymaga to Android SDK
+  oraz urządzenia lub emulatora.
+- Kontynuować kolejne moduły edukacyjne opisane w następnych etapach planu.
+
 
 ## 11. Kryteria ukończenia MVP
 
